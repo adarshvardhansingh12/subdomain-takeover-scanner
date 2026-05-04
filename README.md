@@ -155,8 +155,8 @@ subdomain-takeover-scanner/
 
 ## 🤝 Contributors
 
-* Adarsh Vardhan Singh
-* *(Add your friend’s name here)*
+* Adarshvardhan Singh
+* Lincy Pandit
 
 ---
 
