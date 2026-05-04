@@ -436,5 +436,5 @@ class HTMLReporter:
 </body>
 </html>"""
 
-        with open(output_path, "w", encoding="utf-8") as f:
+       with open(self.output_path, "w", encoding="utf-8") as f:
             f.write(html)
