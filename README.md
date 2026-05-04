@@ -1,81 +1,151 @@
-# Subdomain Takeover Scanner
+# 🔍 Subdomain Takeover Scanner
 
-A Python tool that discovers subdomains and checks them for takeover vulnerabilities against AWS S3, GitHub Pages, and Azure.
+A Python-based security tool that discovers subdomains and identifies potential **subdomain takeover vulnerabilities** caused by dangling CNAME records and misconfigured DNS.
 
-> For authorized use only. Always obtain written permission before scanning.
-
----
-
-## How It Works
-
-1. **Passive recon** — Queries crt.sh (Certificate Transparency logs) for known subdomains
-2. **Active brute-force** — Resolves subdomains from a wordlist via multi-threaded DNS
-3. **CNAME matching** — Checks CNAME records against known vulnerable cloud service patterns
-4. **HTTP fingerprinting** — Fetches each subdomain and looks for "unclaimed" error pages
-5. **Reporting** — Outputs terminal table, HTML dashboard, and PDF report
+> ⚠️ **For authorized security testing only. Always obtain proper permission before scanning any domain.**
 
 ---
 
-## Setup
+## 🚀 Features
+
+* 🔎 Multi-source subdomain enumeration (crt.sh, OTX, RapidDNS, subfinder)
+* ⚠️ Detection of **dangling CNAMEs**
+* 🧠 Fingerprint-based vulnerability detection (AWS, GitHub Pages, Azure, etc.)
+* ⚡ Multithreaded scanning for faster performance
+* 📊 HTML, PDF, and terminal report generation
+* 🧩 Modular and extensible architecture
+
+---
+
+## ⚙️ Installation
 
 ```bash
+git clone https://github.com/adarshvardhansingh12/subdomain-takeover-scanner.git
 cd subdomain-takeover-scanner
-python3 -m venv venv
-source venv/bin/activate
 pip install -r requirements.txt
 ```
 
 ---
 
-## Usage
+## 🧪 Usage
+
+### Basic Scan (Passive + Brute-force)
 
 ```bash
-# Basic scan (passive + brute-force)
 python3 main.py -d example.com
+```
 
-# Passive only (no brute-force)
+### Passive Only (No brute-force)
+
+```bash
 python3 main.py -d example.com --no-bruteforce
+```
 
-# Custom wordlist + output name
+### Custom Wordlist + Output Name
+
+```bash
 python3 main.py -d example.com -w wordlists/subdomains.txt -o results/example_scan
+```
 
-# More threads for faster scanning
+### Faster Scan with More Threads
+
+```bash
 python3 main.py -d example.com -t 50
 ```
 
 ---
 
-## Output
+## 🧠 How It Works
 
-Each run produces:
-- **Terminal** — color-coded findings table with severity and confidence
-- **HTML report** — executive summary cards + full findings + all subdomains table
-- **PDF report** — professional pentest-style report with remediation steps
-
----
-
-## Supported Takeover Services
-
-| Service | Severity | Detection Method |
-|---|---|---|
-| AWS S3 | Critical | CNAME + `NoSuchBucket` response |
-| GitHub Pages | High | CNAME + `There isn't a GitHub Pages site here` |
-| Azure | Critical | CNAME + `404 Web Site not found` |
-
----
-
-## Resume Line
-
-> *"Built a subdomain takeover scanner that combines passive CT log enumeration (crt.sh) with active DNS brute-forcing and HTTP fingerprinting to detect unclaimed AWS S3, GitHub Pages, and Azure resources. Generates PDF/HTML pentest reports with remediation guidance."*
+```
+Target Domain
+      ↓
+Subdomain Enumeration
+(crt.sh, OTX, RapidDNS, subfinder)
+      ↓
+DNS Resolution (CNAME + A records)
+      ↓
+Dangling CNAME Detection
+      ↓
+Fingerprint Matching (AWS, GitHub, Azure, etc.)
+      ↓
+Report Generation (HTML, PDF, Terminal)
+```
 
 ---
 
-## Roadmap
+## 📂 Project Structure
 
-- [x] crt.sh passive enumeration
-- [x] Multi-threaded DNS brute-force
-- [x] AWS S3 / GitHub Pages / Azure detection
-- [x] HTML + PDF + terminal reports
-- [ ] Heroku / Netlify / Fastly fingerprints
-- [ ] Slack/email alerting
-- [ ] CI/CD integration mode
+```
+subdomain-takeover-scanner/
+├── main.py
+├── scanner/
+│   ├── enumerator.py
+│   ├── detector.py
+│   ├── fingerprints.py
+├── reports/
+│   ├── html_report.py
+│   ├── pdf_report.py
+│   ├── terminal_report.py
+├── wordlists/
+├── requirements.txt
+├── README.md
+└── .gitignore
+```
+
+---
+
+## 📊 Output
+
+The tool generates:
+
+* 🖥️ Terminal output (live results)
+* 🌐 HTML report (detailed dashboard)
+* 📄 PDF report (for documentation)
+
+---
+
+## ⚠️ Limitations
+
+* Depends on external APIs (may fail or rate limit)
+* Possible false positives in detection
+* Static fingerprint database
+* No built-in rate limiting (yet)
+
+---
+
+## 🚀 Future Scope
+
+* Async scanning for better performance
+* Expand fingerprint database
+* Integration with tools like Nuclei
+* Real-time monitoring system
+
+---
+
+## 🤝 Contributors
+
+* Adarsh Vardhan Singh
+* *(Add your friend’s name here)*
+
+---
+
+## 📜 License
+
+This project is for educational and ethical security research purposes only.
+
+---
+
+## ⭐ Support
+
+If you found this useful:
+
+* ⭐ Star the repo
+* 🍴 Fork it
+* 🛠️ Contribute improvements
+
+---
+
+## 💡 Inspiration
+
+Inspired by real-world bug bounty methodologies and subdomain takeover research.
