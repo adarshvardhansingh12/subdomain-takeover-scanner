@@ -137,6 +137,42 @@ subdomain-takeover-scanner/
 
 ---
 
+## 🛠️ Troubleshooting
+
+**"subtakeover is not recognized as an internal or external command" (Windows)**
+
+This means pip installed the tool successfully, but the folder containing `subtakeover.exe` isn't in your system PATH. This is a common Windows/Python setup issue, not a bug in the tool itself — it usually happens if Python was installed without checking "Add Python to PATH," or via the Microsoft Store.
+
+1. **Find where it installed:**
+   ```bash
+   pip show -f subdomain-takeover-scanner
+   ```
+   Look for `subtakeover.exe` in the file list, and note the `Location:` line above it. The Scripts folder is one level up from that location, e.g.:
+   ```
+   ...\Python\pythoncore-3.14-64\Scripts
+   ```
+
+2. **Add that Scripts folder to your PATH:**
+   - Press the Windows key → search **"Environment Variables"** → open **"Edit the system environment variables"**
+   - Click **"Environment Variables..."**
+   - Under **"User variables"**, select **Path** → click **Edit** → **New**
+   - Paste the Scripts folder path → OK on all dialogs
+
+3. **Close and reopen your terminal completely** (not just a new tab — the whole app), then try again:
+   ```bash
+   subtakeover -d example.com
+   ```
+
+**Quick workaround without editing PATH:**
+Run the tool with its full path directly:
+```bash
+"<path-to-scripts-folder>\subtakeover.exe" -d example.com
+```
+
+**macOS / Linux users** essentially never hit this — pip installs console scripts into a location that's already on PATH by default (e.g. `~/.local/bin` or your virtualenv's `bin/`).
+
+---
+
 ## ⚠️ Limitations
 
 - Depends on external APIs (may fail or rate-limit)
