@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "subdomain-takeover-scanner"
+version = "1.0.0"
+description = "Automated subdomain takeover scanner for AWS S3, GitHub Pages, and Azure"
+readme = "README.md"
+requires-python = ">=3.8"
+license = { text = "MIT" }
+authors = [
+    { name = "Adarshvardhan Singh" },
+    { name = "Lincy Pandit" }
+]
+dependencies = [
+    "rich",
+    "requests",
+    "dnspython",
+    "httpx",
+    "reportlab"
+]
+
+[project.scripts]
+subtakeover = "main:main"
+
+[tool.setuptools]
+py-modules = ["main"]
+packages = ["scanner", "reports"]
+
+[tool.setuptools.package-data]
+"*" = ["wordlists/*.txt"]
