@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import argparse
+import os
 import sys
 from datetime import datetime
 from rich.console import Console
@@ -13,6 +14,11 @@ from reports.html_report import HTMLReporter
 from reports.pdf_report import PDFReporter
 
 console = Console()
+
+# Resolve the wordlist path relative to this file's location, not the
+# current working directory, so the tool works correctly whether run
+# from the repo (python3 main.py ...) or installed via pip (subtakeover ...)
+DEFAULT_WORDLIST = os.path.join(os.path.dirname(os.path.abspath(__file__)), "wordlists", "subdomains.txt")
 
 BANNER = """
  ███████╗██╗   ██╗██████╗ ██████╗  ██████╗ ███╗   ███╗ █████╗ ██╗███╗   ██╗
@@ -33,8 +39,8 @@ def parse_args():
         formatter_class=argparse.RawTextHelpFormatter
     )
     parser.add_argument("-d", "--domain", required=True, help="Target domain (e.g. example.com)")
-    parser.add_argument("-w", "--wordlist", default="wordlists/subdomains.txt",
-                        help="Wordlist for brute-force (default: wordlists/subdomains.txt)")
+    parser.add_argument("-w", "--wordlist", default=DEFAULT_WORDLIST,
+                        help=f"Wordlist for brute-force (default: {DEFAULT_WORDLIST})")
     parser.add_argument("-o", "--output", default="takeover_report",
                         help="Output file base name (default: takeover_report)")
     parser.add_argument("-t", "--threads", type=int, default=20,
